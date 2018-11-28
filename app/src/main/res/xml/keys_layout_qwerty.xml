@@ -3,8 +3,8 @@
     android:keyWidth="9%p"
     android:horizontalGap="3px"
     android:verticalGap="3px"
-    android:keyheight="60dp"
-    android:keyextColor="@color/colorAccent"
+    android:keyHeight="60dp"
+    android:keyTextColor="@color/colorAccent"
     android:keyBackground="@color/colorPrimaryDark"
     >
     <Row>

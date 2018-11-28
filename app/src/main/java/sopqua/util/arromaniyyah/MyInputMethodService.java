@@ -1,6 +1,5 @@
 package sopqua.util.arromaniyyah;
 
-import android.inputmethodservice;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
