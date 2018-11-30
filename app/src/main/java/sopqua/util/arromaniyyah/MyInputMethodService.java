@@ -41,15 +41,42 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
                 inputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
                 break;
             case 68:
-                inputConnection.commitText("`", 1);
+                composingText += "`";
+                inputConnection.setComposingText(composingText, 1);
+                break;
             case 75:
-                inputConnection.commitText("'", 1);
+                composingText += "'";
+                inputConnection.setComposingText(composingText, 1);
+                break;
+            case 55:
+                inputConnection.commitText(mostLikelyWord(composingText), 1);
+                inputConnection.commitText(",", 1);
+                break;
+            case 56:
+                inputConnection.commitText(mostLikelyWord(composingText), 1);
+                inputConnection.commitText(".", 1);
+                break;
+            case 32:
+                inputConnection.commitText(mostLikelyWord(composingText), 1);
+                inputConnection.commitText(" ", 1);
+                break;
             default:
                 char code = (char) primaryCode;
-                inputConnection.commitText(String.valueOf(code), 1);
+                composingText += String.valueOf(code);
+                inputConnection.setComposingText(composingText, 1);
         }
 
     }
+
+    private String mostLikelyWord(String composingText) {
+        return mostLikelyWords(composingText)[0];
+    }
+
+    private String[] mostLikelyWords(String composingText) {
+        //TODO: Arabic word guessing logic goes here
+        return new String[]{ composingText };
+    }
+
     @Override
     public void onText(CharSequence charSequence) {
 
@@ -73,6 +100,7 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
 
     private KeyboardView keyboardView;
     private Keyboard keyboard;
+    private String composingText = "";
 
     @Override
     public View onCreateInputView() {

@@ -47,7 +47,7 @@
         <Key android:codes="78" android:keyLabel="١٢٣" android:keyWidth="10%p" android:keyEdgeFlags="left"/>
         <Key android:codes="67" android:keyLabel="\u2190" android:keyWidth="10%p"/>
         <Key android:codes="32" android:keyLabel=" " android:keyWidth="60%p"/>
-        <Key android:codes="204" android:keyLabel="\u1f310"/>
+        <Key android:codes="204" android:keyLabel="\u1f310" android:keyWidth="10%p"/>
         <Key android:codes="66" android:keyLabel="\u21a9" android:keyWidth="10%p" android:keyEdgeFlags="right"/>
     </Row>
 </Keyboard>
