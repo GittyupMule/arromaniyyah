@@ -5,6 +5,7 @@ import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -181,6 +182,7 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
     }
 
     public void updateSuggestions() {
+        Log.d("ジョジョ", "I'm in the method");
         String[] suggestions = mostLikelyWords(composingText);
         View[] borders = new View[]{getLayoutByRes(R.layout.candidates_view, null)
                 .findViewById(R.id.border0),
@@ -227,6 +229,7 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
         TextView textView = getLayoutByRes(R.layout.candidates_view, null)
                 .findViewById(R.id.composingTextView);
         textView.setText(composingText);
+        Log.d("ジョジョ", "Composing text set");
         int len = suggestions.length;
         for (int i = 0; i < len; i++) {
             candidates[i].clearAnimation();
@@ -241,5 +244,6 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
             borders[i].clearAnimation();
             borders[i].setVisibility(View.GONE);
         }
+        Log.d("ジョジョ", "Candidates visibility updated");
     }
 }
