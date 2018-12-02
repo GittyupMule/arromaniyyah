@@ -160,12 +160,13 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
                         .findViewById(R.id.suggestion9)
         };
         for (int i = 0; i < 10; i++) {
-            candidates[0].setOnClickListener(
+            final int j = i;
+            candidates[i].setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             try {
-                                getCurrentInputConnection().commitText(mostLikelyWords(composingText)[0], 1);
+                                getCurrentInputConnection().commitText(mostLikelyWords(composingText)[j], 1);
                             } catch (ArrayIndexOutOfBoundsException e) {
                                 // Why are you here? The view should be invisible.
                             }
