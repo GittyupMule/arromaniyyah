@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    static void setIc(InputConnection mIc) {
+        MyBroadcastReceiver.ic = mIc;
+    }
+
     public static class MyBroadcastReceiver extends BroadcastReceiver {
         private static View v;
         private static InputConnection ic;

@@ -155,6 +155,10 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         Log.wtf("ジョジョ", "onCreateCandidatesView");
         candidatesView = getLayoutInflater().inflate(R.layout.candidates_view, null);
         InputConnection ic = getCurrentInputConnection();
+        MainActivity.setIc(ic);
+        Intent intent = new Intent();
+        intent.setAction("sopqua.util.arromaniyyah.ON_CREATE");
+        sendBroadcast(intent);
         updateSuggestions();
         return candidatesView;
     }
