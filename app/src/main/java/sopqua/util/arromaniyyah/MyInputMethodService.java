@@ -1,9 +1,13 @@
 package sopqua.util.arromaniyyah;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.net.ConnectivityManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -13,7 +17,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputConnection;
 import android.widget.TextView;
 
-public class MyInputMethodService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
+public final class MyInputMethodService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
     public MyInputMethodService() {
         super();
     }
@@ -87,11 +91,11 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
         }
     }
 
-    private String mostLikelyWord(String composingText) {
+    static String mostLikelyWord(String composingText) {
         return mostLikelyWords(composingText)[0];
     }
 
-    private String[] mostLikelyWords(String composingText) {
+    static String[] mostLikelyWords(String composingText) {
         //TODO: Arabic word guessing logic goes here
         if (composingText == "") {
             return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
@@ -100,7 +104,7 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
         return wtfArray("ジョジョ", result);
     }
 
-    private String[] wtfArray(String tag, String[] input) {
+    static String[] wtfArray(String tag, String[] input) {
         Log.wtf(tag, "[");
         for (String i : input) {
             Log.wtf(tag, "    \"" + i + "\"");
@@ -197,69 +201,9 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
     }
 
     public void updateSuggestions() {
-        Log.wtf("ジョジョ", "I'm in the method");
-        String[] suggestions = mostLikelyWords(composingText);
-        View[] borders = new View[]{getLayoutByRes(R.layout.candidates_view, null)
-                .findViewById(R.id.border0)//,
-                /*getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border1),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border2),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border3),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border4),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border5),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border6),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border7),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border8),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border9)*/};
-        TextView[] candidates = new TextView[]{
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion0)/*,
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion1),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion2),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion3),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion4),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion5),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion6),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion7),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion8),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion9)*/
-        };
-        TextView textView = getLayoutByRes(R.layout.candidates_view, null)
-                .findViewById(R.id.composingTextView);
-        textView.setText(composingText);
-        Log.wtf("ジョジョ", "Composing text set to: " + textView.getText());
-        int len = suggestions.length;
-        for (int i = 0; i < len; i++) {
-            candidates[i].clearAnimation();
-            candidates[i].setVisibility(View.VISIBLE);
-            borders[i].clearAnimation();
-            borders[i].setVisibility(View.VISIBLE);
-            candidates[i].setText(suggestions[i]);
-            Log.wtf("ジョジョ", "Candidate " + i + " text set to: " + candidates[i].getText());
-        }
-        for (int i = len; i < 1; i++) {
-            candidates[i].clearAnimation();
-            candidates[i].setVisibility(View.INVISIBLE);
-            borders[i].clearAnimation();
-            borders[i].setVisibility(View.INVISIBLE);
-        }
-        Log.wtf("ジョジョ", "Candidates visibility updated");
+        Intent intent = new Intent();
+        intent.setAction("sopqua.util.arromaniyyah.UPDATE_SUGGESTIONS");
+        intent.putExtra("composing",composingText);
+        sendBroadcast(intent);
     }
 }
