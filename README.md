@@ -16,7 +16,7 @@ Arabic has one of the more unwieldy scripts. It fits the language's syntax extre
 Latin script will represent the name as "Yazid" regardless of these differences.
 
 ### 2) Literacy
-Morocco's literacy rate is 70%. Iraq's is 44%. Latin script is probably easier to learn? (Studies would be appreciated.)
+Morocco's literacy rate is 70%. Iraq's is 44%. Latin script is probably easier to learn for people illiterate in Arabic but who know the spoken language? (Studies would be appreciated.)
 
 ### 3) Efficiency
 Many keyboard layouts are terrible. Arabic's default one takes the cake. It groups together letters that are shaped similarly, with no regard to hand alternation or rolling action. QWERTY, even with is faults, is better in this way. Some people probably just type faster in QWERTY.
