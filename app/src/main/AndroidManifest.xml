@@ -38,6 +38,7 @@
         <receiver android:name=".MainActivity$MyBroadcastReceiver"  android:exported="true">
             <intent-filter>
                 <action android:name="sopqua.util.arromaniyyah.UPDATE_SUGGESTIONS" />
+                <action android:name="sopqua.util.arromaniyyah.ON_CREATE" />
             </intent-filter>
         </receiver>
     </application>

@@ -154,44 +154,8 @@ public final class MyInputMethodService extends InputMethodService implements Ke
     public View onCreateCandidatesView() {
         Log.wtf("ジョジョ", "onCreateCandidatesView");
         candidatesView = getLayoutInflater().inflate(R.layout.candidates_view, null);
+        InputConnection ic = getCurrentInputConnection();
         updateSuggestions();
-        TextView[] candidates = new TextView[]{
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion0)/*,
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion1),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion2),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion3),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion4),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion5),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion6),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion7),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion8),
-                getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion9)*/
-        };
-        for (int i = 0; i < 1; i++) {
-            final int j = i;
-            candidates[i].setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            try {
-                                getCurrentInputConnection().commitText(mostLikelyWords(composingText)[j], 1);
-                            } catch (ArrayIndexOutOfBoundsException e) {
-                                // Why are you here? The view should be invisible.
-                            }
-                        }
-                    }
-            );
-        }
         return candidatesView;
     }
 

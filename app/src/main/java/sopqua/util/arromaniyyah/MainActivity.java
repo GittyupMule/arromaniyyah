@@ -7,8 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputConnection;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static sopqua.util.arromaniyyah.MyInputMethodService.mostLikelyWords;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,13 +24,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static class MyBroadcastReceiver extends BroadcastReceiver {
         private static View v;
+        private static InputConnection ic;
         private static final String TAG = "MyBroadcastReceiver";
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("sopqua.util.arromaniyyah.UPDATE_SUGGESTIONS")) {
                 String composingText = intent.getStringExtra("composing");
                 Log.wtf("ジョジョ", "I'm in the method");
-                String[] suggestions = MyInputMethodService.mostLikelyWords(composingText);
+                String[] suggestions = mostLikelyWords(composingText);
                 View[] borders = new View[]{
                         v.findViewById(R.id.border0)//,
                         /*v.findViewById(R.id.border1),
@@ -70,6 +74,34 @@ public class MainActivity extends AppCompatActivity {
                     borders[i].setVisibility(View.INVISIBLE);
                 }
                 Log.wtf("ジョジョ", "Candidates visibility updated");
+            } else if (intent.getAction().equals("sopqua.util.arromaniyyah.ON_CREATE")) {
+                TextView[] candidates = new TextView[]{
+                        v.findViewById(R.id.suggestion0)/*,
+                        v.findViewById(R.id.suggestion1),
+                        v.findViewById(R.id.suggestion2),
+                        v.findViewById(R.id.suggestion3),
+                        v.findViewById(R.id.suggestion4),
+                        v.findViewById(R.id.suggestion5),
+                        v.findViewById(R.id.suggestion6),
+                        v.findViewById(R.id.suggestion7),
+                        v.findViewById(R.id.suggestion8),
+                        v.findViewById(R.id.suggestion9)*/
+                };
+                for (int i = 0; i < 1; i++) {
+                    final int j = i;
+                    candidates[i].setOnClickListener(
+                            new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    try {
+                                        ic.commitText(mostLikelyWords((String) ((TextView) v.findViewById(R.id.composingTextView)).getText())[j], 1);
+                                    } catch (ArrayIndexOutOfBoundsException e) {
+                                        // Why are you here? The view should be invisible.
+                                    }
+                                }
+                            }
+                    );
+                }
             }
         }
     }
