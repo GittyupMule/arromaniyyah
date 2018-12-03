@@ -93,7 +93,20 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
 
     private String[] mostLikelyWords(String composingText) {
         //TODO: Arabic word guessing logic goes here
-        return new String[]{ composingText };
+        if (composingText == "") {
+            return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
+        }
+        String[] result = new String[]{ composingText };
+        return wtfArray("ジョジョ", result);
+    }
+
+    private String[] wtfArray(String tag, String[] input) {
+        Log.wtf(tag, "[");
+        for (String i : input) {
+            Log.wtf(tag, "    \"" + i + "\"");
+        }
+        Log.wtf(tag, "]");
+        return input;
     }
 
     @Override
@@ -135,11 +148,12 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
 
     @Override
     public View onCreateCandidatesView() {
+        Log.wtf("ジョジョ", "onCreateCandidatesView");
         candidatesView = getLayoutInflater().inflate(R.layout.candidates_view, null);
         updateSuggestions();
         TextView[] candidates = new TextView[]{
                 getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion0),
+                        .findViewById(R.id.suggestion0)/*,
                 getLayoutByRes(R.layout.candidates_view, null)
                         .findViewById(R.id.suggestion1),
                 getLayoutByRes(R.layout.candidates_view, null)
@@ -157,9 +171,9 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
                 getLayoutByRes(R.layout.candidates_view, null)
                         .findViewById(R.id.suggestion8),
                 getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion9)
+                        .findViewById(R.id.suggestion9)*/
         };
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             final int j = i;
             candidates[i].setOnClickListener(
                     new View.OnClickListener() {
@@ -183,11 +197,11 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
     }
 
     public void updateSuggestions() {
-        Log.d("ジョジョ", "I'm in the method");
+        Log.wtf("ジョジョ", "I'm in the method");
         String[] suggestions = mostLikelyWords(composingText);
         View[] borders = new View[]{getLayoutByRes(R.layout.candidates_view, null)
-                .findViewById(R.id.border0),
-                getLayoutByRes(R.layout.candidates_view, null)
+                .findViewById(R.id.border0)//,
+                /*getLayoutByRes(R.layout.candidates_view, null)
                         .findViewById(R.id.border1),
                 getLayoutByRes(R.layout.candidates_view, null)
                         .findViewById(R.id.border2),
@@ -204,10 +218,10 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
                 getLayoutByRes(R.layout.candidates_view, null)
                         .findViewById(R.id.border8),
                 getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.border9)};
+                        .findViewById(R.id.border9)*/};
         TextView[] candidates = new TextView[]{
                 getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion0),
+                        .findViewById(R.id.suggestion0)/*,
                 getLayoutByRes(R.layout.candidates_view, null)
                         .findViewById(R.id.suggestion1),
                 getLayoutByRes(R.layout.candidates_view, null)
@@ -225,12 +239,12 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
                 getLayoutByRes(R.layout.candidates_view, null)
                         .findViewById(R.id.suggestion8),
                 getLayoutByRes(R.layout.candidates_view, null)
-                        .findViewById(R.id.suggestion9)
+                        .findViewById(R.id.suggestion9)*/
         };
         TextView textView = getLayoutByRes(R.layout.candidates_view, null)
                 .findViewById(R.id.composingTextView);
         textView.setText(composingText);
-        Log.d("ジョジョ", "Composing text set");
+        Log.wtf("ジョジョ", "Composing text set to: " + textView.getText());
         int len = suggestions.length;
         for (int i = 0; i < len; i++) {
             candidates[i].clearAnimation();
@@ -238,13 +252,14 @@ public class MyInputMethodService extends InputMethodService implements Keyboard
             borders[i].clearAnimation();
             borders[i].setVisibility(View.VISIBLE);
             candidates[i].setText(suggestions[i]);
+            Log.wtf("ジョジョ", "Candidate " + i + " text set to: " + candidates[i].getText());
         }
-        for (int i = len; i < 10; i++) {
+        for (int i = len; i < 1; i++) {
             candidates[i].clearAnimation();
-            candidates[i].setVisibility(View.GONE);
+            candidates[i].setVisibility(View.INVISIBLE);
             borders[i].clearAnimation();
-            borders[i].setVisibility(View.GONE);
+            borders[i].setVisibility(View.INVISIBLE);
         }
-        Log.d("ジョジョ", "Candidates visibility updated");
+        Log.wtf("ジョジョ", "Candidates visibility updated");
     }
 }

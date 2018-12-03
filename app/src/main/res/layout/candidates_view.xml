@@ -3,10 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#d0d0d0">
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:id="@+id/composingTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Composing TextView"/>
     <View
         android:id="@+id/border0"
         android:layout_width="1px"
@@ -16,15 +17,15 @@
         android:layout_marginBottom="1px"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:id="@+id/suggestion0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="#000000"
         android:background="#d0d0d0"
-        android:text="" />
-    <View
+        android:text="THE HOLY TEXTVIEW TESTx" />
+    <!--<View
         android:id="@+id/border1"
         android:layout_width="1px"
         android:layout_height="match_parent"
@@ -176,5 +177,5 @@
         android:textSize="18sp"
         android:textColor="#000000"
         android:background="#d0d0d0"
-        android:text=""/>
+        android:text=""/>-->
 </LinearLayout>
