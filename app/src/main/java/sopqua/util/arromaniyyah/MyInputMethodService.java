@@ -8,6 +8,7 @@ import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 public final class MyInputMethodService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
@@ -82,6 +84,34 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                 composingText = "";
                 updateSuggestions();
                 inputConnection.commitText(" ", 1);
+                break;
+            case 204:
+                if (Build.VERSION.SDK_INT >= 28) {
+                    switchToNextInputMethod(false);
+                } else if (Build.VERSION.SDK_INT >= 16) {
+                    try {
+                        ((InputMethodManager) getLayoutInflater()
+                                .inflate(R.layout.candidates_view, null)
+                                .getContext()
+                                .getSystemService(INPUT_METHOD_SERVICE))
+                                .switchToNextInputMethod(
+                                        getWindow()
+                                                .getWindow()
+                                                .getAttributes()
+                                                .token,
+                                        false
+                                );
+                    } catch (NullPointerException e) {
+                        ((InputMethodManager) getLayoutInflater()
+                                .inflate(R.layout.candidates_view, null)
+                                .getContext()
+                                .getSystemService(INPUT_METHOD_SERVICE))
+                                .switchToNextInputMethod(
+                                        null,
+                                        false
+                                );
+                    }
+                }
                 break;
             default:
                 char code = (char) primaryCode;
@@ -169,9 +199,11 @@ public final class MyInputMethodService extends InputMethodService implements Ke
     }
 
     public void updateSuggestions() {
+        Log.wtf("ジョジョ", "Sending UPDATE_SUGGESTIONS");
         Intent intent = new Intent();
         intent.setAction("sopqua.util.arromaniyyah.UPDATE_SUGGESTIONS");
         intent.putExtra("composing",composingText);
         sendBroadcast(intent);
+        Log.wtf("ジョジョ", "UPDATE_SUGGESTIONS sent");
     }
 }

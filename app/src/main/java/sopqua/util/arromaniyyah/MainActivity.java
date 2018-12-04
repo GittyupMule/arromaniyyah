@@ -22,6 +22,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onDestroy() {
+        Log.wtf("ジョジョ", "Acivity being destroyed, please help");
+        super.onDestroy();
+    }
+
     static void setIc(InputConnection mIc) {
         MyBroadcastReceiver.ic = mIc;
     }
@@ -33,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals("sopqua.util.arromaniyyah.UPDATE_SUGGESTIONS")) {
+                Log.wtf("ジョジョ", "UPDATE_SUGGESTIONS");
                 String composingText = intent.getStringExtra("composing");
                 Log.wtf("ジョジョ", "I'm in the method");
                 String[] suggestions = mostLikelyWords(composingText);
@@ -79,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Log.wtf("ジョジョ", "Candidates visibility updated");
             } else if (intent.getAction().equals("sopqua.util.arromaniyyah.ON_CREATE")) {
+                Log.wtf("ジョジョ", "ON_CREATE");
                 TextView[] candidates = new TextView[]{
                         v.findViewById(R.id.suggestion0)/*,
                         v.findViewById(R.id.suggestion1),
@@ -98,7 +106,15 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     try {
-                                        ic.commitText(mostLikelyWords((String) ((TextView) v.findViewById(R.id.composingTextView)).getText())[j], 1);
+                                        ic.commitText(
+                                                mostLikelyWords(
+                                                        (String) ((TextView) v
+                                                                .findViewById(
+                                                                        R.id.composingTextView
+                                                                )
+                                                        ).getText())[j],
+                                                1
+                                        );
                                     } catch (ArrayIndexOutOfBoundsException e) {
                                         // Why are you here? The view should be invisible.
                                     }
