@@ -35,10 +35,11 @@
 
         </service>
 
-        <receiver android:name=".MainActivity$MyBroadcastReceiver"  android:exported="true">
+        <receiver android:name=".MyBroadcastReceiver"  android:exported="true" >
             <intent-filter>
                 <action android:name="sopqua.util.arromaniyyah.UPDATE_SUGGESTIONS" />
                 <action android:name="sopqua.util.arromaniyyah.ON_CREATE" />
+                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
             </intent-filter>
         </receiver>
     </application>
