@@ -15,9 +15,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
+
+import static sopqua.util.arromaniyyah.MyBroadcastReceiver.v;
 
 public final class MyInputMethodService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
     public MyInputMethodService() {
@@ -186,11 +189,49 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         candidatesView = getLayoutInflater().inflate(R.layout.candidates_view, null);
         InputConnection ic = getCurrentInputConnection();
         MainActivity.setIc(ic);
-        Intent intent = new Intent();
-        intent.setAction("sopqua.util.arromaniyyah.ON_CREATE");
-        sendBroadcast(intent);
+        Log.wtf("ジョジョ", "ON_CREATE");
+        TextView[] candidates = new TextView[]{
+                v.findViewById(R.id.suggestion0),
+                v.findViewById(R.id.suggestion1),
+                v.findViewById(R.id.suggestion2),
+                v.findViewById(R.id.suggestion3),
+                v.findViewById(R.id.suggestion4),
+                v.findViewById(R.id.suggestion5),
+                v.findViewById(R.id.suggestion6),
+                v.findViewById(R.id.suggestion7),
+                v.findViewById(R.id.suggestion8),
+                v.findViewById(R.id.suggestion9)
+        };
+        for (int i = 0; i < 10; i++) {
+            final int j = i;
+            candidates[i].setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                getCurrentInputConnection().commitText(
+                                        mostLikelyWords(
+                                                composingText
+                                        )[j],
+                                        1
+                                );
+                                composingText = "";
+                                updateSuggestions();
+                            } catch (ArrayIndexOutOfBoundsException e) {
+                                // Why are you here? The view should be invisible.
+                            }
+                        }
+                    }
+            );
+        }
         updateSuggestions();
         return candidatesView;
+    }
+
+    @Override
+    public void onStartCandidatesView(EditorInfo info, boolean restarting) {
+        super.onStartCandidatesView(info, restarting);
+        setCandidatesView(v);
     }
 
     public View getLayoutByRes(int layoutRes, ViewGroup viewGroup)     {
@@ -199,11 +240,56 @@ public final class MyInputMethodService extends InputMethodService implements Ke
     }
 
     public void updateSuggestions() {
-        Log.wtf("ジョジョ", "Sending UPDATE_SUGGESTIONS");
+        /*Log.wtf("ジョジョ", "Sending UPDATE_SUGGESTIONS");
         Intent intent = new Intent();
         intent.setAction("sopqua.util.arromaniyyah.UPDATE_SUGGESTIONS");
         intent.putExtra("composing",composingText);
         sendBroadcast(intent);
-        Log.wtf("ジョジョ", "UPDATE_SUGGESTIONS sent");
+        Log.wtf("ジョジョ", "UPDATE_SUGGESTIONS sent");*/
+        Log.wtf("ジョジョ", "I'm in the method");
+        String[] suggestions = mostLikelyWords(composingText);
+        View[] borders = new View[]{
+                v.findViewById(R.id.border0),
+                v.findViewById(R.id.border1),
+                v.findViewById(R.id.border2),
+                v.findViewById(R.id.border3),
+                v.findViewById(R.id.border4),
+                v.findViewById(R.id.border5),
+                v.findViewById(R.id.border6),
+                v.findViewById(R.id.border7),
+                v.findViewById(R.id.border8),
+                v.findViewById(R.id.border9)};
+        TextView[] candidates = new TextView[]{
+                v.findViewById(R.id.suggestion0),
+                v.findViewById(R.id.suggestion1),
+                v.findViewById(R.id.suggestion2),
+                v.findViewById(R.id.suggestion3),
+                v.findViewById(R.id.suggestion4),
+                v.findViewById(R.id.suggestion5),
+                v.findViewById(R.id.suggestion6),
+                v.findViewById(R.id.suggestion7),
+                v.findViewById(R.id.suggestion8),
+                v.findViewById(R.id.suggestion9)
+        };
+        TextView textView = v.findViewById(R.id.composingTextView);
+        textView.setText(composingText);
+        Log.wtf("ジョジョ", "Composing text set to: " + textView.getText());
+        int len = suggestions.length;
+        for (int i = 0; i < len && i < 10; i++) {
+            candidates[i].clearAnimation();
+            candidates[i].setVisibility(View.VISIBLE);
+            borders[i].clearAnimation();
+            borders[i].setVisibility(View.VISIBLE);
+            candidates[i].setText(suggestions[i]);
+            Log.wtf("ジョジョ", "Candidate " + i + " text set to: " + candidates[i].getText());
+        }
+        for (int i = len; i < 10; i++) {
+            candidates[i].clearAnimation();
+            candidates[i].setVisibility(View.INVISIBLE);
+            borders[i].clearAnimation();
+            borders[i].setVisibility(View.INVISIBLE);
+        }
+        Log.wtf("ジョジョ", "Candidates visibility updated");
+        setCandidatesView(v);
     }
 }

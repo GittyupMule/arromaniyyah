@@ -7,7 +7,10 @@
         android:id="@+id/composingTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Composing TextView"/>
+        android:textSize="18sp"
+        android:textColor="#606060"
+        android:background="#d0d0d0"
+        android:text=""/>
     <View
         android:id="@+id/border0"
         android:layout_width="1px"
@@ -24,8 +27,8 @@
         android:textSize="18sp"
         android:textColor="#000000"
         android:background="#d0d0d0"
-        android:text="THE HOLY TEXTVIEW TESTx" />
-    <!--<View
+        android:text="" />
+    <View
         android:id="@+id/border1"
         android:layout_width="1px"
         android:layout_height="match_parent"
@@ -177,5 +180,5 @@
         android:textSize="18sp"
         android:textColor="#000000"
         android:background="#d0d0d0"
-        android:text=""/>-->
+        android:text=""/>
 </LinearLayout>
