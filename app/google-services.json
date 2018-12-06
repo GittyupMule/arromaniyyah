@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "902413169363",
+    "firebase_url": "https://ar-romaniyyah.firebaseio.com",
+    "project_id": "ar-romaniyyah",
+    "storage_bucket": "ar-romaniyyah.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902413169363:android:7b9762cfe905c416",
+        "android_client_info": {
+          "package_name": "sopqua.util.arromaniyyah"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902413169363-2cumu125ct71197ejhel8pbt8c1eo0iq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDo75YGKgb-AsQoTG_fctuhX-scEX5l300"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
