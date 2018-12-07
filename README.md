@@ -1,4 +1,4 @@
-# arRomaniyyah / لارُمَنِيَّة
+# arRomaniyyah / اَلرُمَنِيَّة
 A Latin-script keyboard for the Arabic language.
 
 ## Wait, why would anyone want this?
