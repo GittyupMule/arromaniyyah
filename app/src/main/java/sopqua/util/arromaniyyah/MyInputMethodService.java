@@ -124,7 +124,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         }
     }
 
-    public static RomanizationSchema untypeable = new RomanizationSchema() {
+    /*public static RomanizationSchema untypeable = new RomanizationSchema() {
         @Override
         public String firstPass(ArabicGrapheme input) {
             switch (input) {
@@ -459,7 +459,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
             }
             return firstPassInput;
         }
-    };
+    };*/
 
     static String mostLikelyWord(String composingText) {
         return mostLikelyWords(composingText)[0];
