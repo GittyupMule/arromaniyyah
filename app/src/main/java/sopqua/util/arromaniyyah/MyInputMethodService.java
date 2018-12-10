@@ -124,6 +124,173 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         }
     }
 
+    public static RomanizationSchema typeable = new RomanizationSchema() {
+        @Override
+        public String firstPass(ArabicGrapheme input) {
+            switch (input) {
+                case FATHAH:
+                    return "a";
+                case KASRAH:
+                    return "i";
+                case DAMMAH:
+                    return "u";
+                case HANJARIYYAH:
+                    return "a";
+                case ALIF_MADDAH:
+                    return "'a";
+                case FATHAH_TANWIN:
+                    return "an";
+                case KASRAH_TANWIN:
+                    return "in";
+                case DAMMAH_TANWIN:
+                    return "un";
+                case SHADDAH:
+                    return "ɔ";
+                case YA:
+                    return "y";
+                case MAQSURAH:
+                    return "á";
+                case WAW:
+                    return "w";
+                case HA:
+                    return "h";
+                case NUN:
+                    return "n";
+                case MIM:
+                    return "m";
+                case LAM:
+                    return "l";
+                case KAF:
+                    return "k";
+                case QAF:
+                    return "q";
+                case FA:
+                    return "f";
+                case GHAYN:
+                    return "`";
+                case AYN:
+                    return "`";
+                case ZA:
+                    return "z";
+                case TTA:
+                    return "t";
+                case DAD:
+                    return "d";
+                case SAD:
+                    return "s";
+                case SHIN:
+                    return "s";
+                case SIN:
+                    return "s";
+                case ZAY:
+                    return "z";
+                case RA:
+                    return "r";
+                case DHAL:
+                    return "d";
+                case DAL:
+                    return "d";
+                case KHA:
+                    return "h";
+                case HHA:
+                    return "h";
+                case JIM:
+                    return "g";
+                case THA:
+                    return "t";
+                case TA:
+                    return "t";
+                case BA:
+                    return "b";
+                case ALIF:
+                    return "a";
+                case HAMZAH:
+                    return "'";
+                case MARBUTAH:
+                    return "h";
+                case MEDIAL_IY_HAMZAH:
+                    return "i'";
+                case MEDIAL_AY_HAMZAH:
+                    return "ay'";
+                case AL:
+                    return "aɫ";
+                case MEDIAL_HAMZAH_I:
+                    return "'i";
+                case INITIAL_HAMZAH_I:
+                    return "'i";
+                case INITIAL_HAMZAH_U:
+                    return "'u";
+                case INITIAL_HAMZAH_A:
+                    return "'a";
+                case MEDIAL_HAMZAH_U_ON_YA:
+                    return "'u";
+                case MEDIAL_HAMZAH_A_ON_YA:
+                    return "'a";
+                case MEDIAL_HAMZAH_U_ON_WAW:
+                    return "'u";
+                case MEDIAL_HAMZAH_A_ON_WAW:
+                    return "'a";
+                case MEDIAL_HAMZAH_A_ON_ALIF:
+                    return "'a";
+                case FINAL_HAMZAH_ON_YA:
+                    return "'";
+                case FINAL_HAMZAH_ON_WAW:
+                    return "'";
+                case FINAL_HAMZAH_ABOVE_ALIF:
+                    return "'";
+                case FINAL_HAMZAH_BELOW_ALIF:
+                    return "'";
+                default:
+                    return "";
+            }
+        }
+
+        @Override
+        public String postProcessing(String firstPassInput) {
+            if (firstPassInput.contains("ɫ")) { // Solar letters.
+                if (firstPassInput.contains("ɫn")) {
+                    firstPassInput = firstPassInput.replace("ɫn", "nn");
+                } else if (firstPassInput.contains("ɫz")) {
+                    firstPassInput = firstPassInput.replace("ɫz", "zz");
+                } else if (firstPassInput.contains("ɫt")) {
+                    firstPassInput = firstPassInput.replace("ɫt", "tt");
+                } else if (firstPassInput.contains("ɫd")) {
+                    firstPassInput = firstPassInput.replace("ɫd", "dd");
+                } else if (firstPassInput.contains("ɫs")) {
+                    firstPassInput = firstPassInput.replace("ɫs", "ss");
+                } else if (firstPassInput.contains("ɫr")) {
+                    firstPassInput = firstPassInput.replace("ɫr", "rr");
+                } else {
+                    firstPassInput = firstPassInput.replace("ɫ", "l");
+                }
+            }
+            while (firstPassInput.contains("aa")) {
+                firstPassInput = firstPassInput.replace("aa", "a");
+            }
+            while (firstPassInput.contains("iy")) {
+                firstPassInput = firstPassInput.replace("iy", "i");
+            }
+            while (firstPassInput.contains("uw")) {
+                firstPassInput = firstPassInput.replace("uw", "u");
+            }
+            while (firstPassInput.contains("ɔ")) {
+                firstPassInput =
+                        firstPassInput.substring(
+                                0,
+                                firstPassInput.indexOf("ɔ")
+                        )
+                                + firstPassInput.substring(
+                                firstPassInput.indexOf("ɔ") + 1,
+                                firstPassInput.indexOf("ɔ") + 2
+                        )
+                                + firstPassInput.substring(
+                                firstPassInput.indexOf("ɔ") + 1
+                        );
+            }
+            return firstPassInput;
+        }
+    };
+
     public static RomanizationSchema untypeable = new RomanizationSchema() {
         @Override
         public String firstPass(ArabicGrapheme input) {
