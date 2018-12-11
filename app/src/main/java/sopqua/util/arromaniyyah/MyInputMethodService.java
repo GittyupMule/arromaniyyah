@@ -805,7 +805,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                 } else if (input.startsWith("sh")) {
                     sb.append('\u0634');
                     input = input.substring(2);
-                } else if (input.startsWith("s`") {
+                } else if (input.startsWith("s`")) {
                     sb.append('\u0635');
                     input = input.substring(2);
                 } else if (input.startsWith("d`")) {
