@@ -856,6 +856,8 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                 } else if (input.startsWith("ii")) {
                     sb.append("\u0650\u064a");
                     input = input.substring(2);
+                } else {
+                    input = input.substring(1);
                 }
             }
             return sb.toString();
@@ -870,8 +872,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         if (composingText.equals("")) {
             return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
         }
-        /*String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);*/
-        String[] result = new String[]{};
+        String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);
         return wtfArray("ジョジョ", result);
     }
 
@@ -912,10 +913,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
 
     @Override
     public View onCreateInputView() {
-        /*InputStream ins = ((Context) this).getResources().openRawResource(R.raw.frequency_onegrams);
-        java.util.Scanner s = new java.util.Scanner(ins).useDelimiter("\\A");
-        String json = s.hasNext() ? s.next() : "";
-        map = new Gson().fromJson(json, new TypeToken<HashMap<String, Integer>>() {}.getType());*/
+        map = new Gson().fromJson(OnegramJSON.onegrams, new TypeToken<HashMap<String, Integer>>() {}.getType());
         keyboardView = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_view, null);
         keyboard = new Keyboard(this, R.xml.keys_layout_qwerty);
         keyboardView.setKeyboard(keyboard);
