@@ -16,14 +16,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    afterEvaluate { project ->
-        project.tasks.processDebugResources {
-            onlyIf  {
-                println 'Skipping...'
-                return false
-            }
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

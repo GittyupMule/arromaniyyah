@@ -1,13 +1,9 @@
 package sopqua.util.arromaniyyah;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
-import android.net.ConnectivityManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,12 +15,36 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import static sopqua.util.arromaniyyah.MyBroadcastReceiver.v;
 
 public final class MyInputMethodService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
+    private static HashMap<String, Integer> map;
+    private static ArrayList<RomanizationSchema> schemae = new ArrayList<>();
+
     public MyInputMethodService() {
         super();
+        InputStream ins = getResources().openRawResource(
+                getResources().getIdentifier("frequency_onegrams.json",
+                        "raw", getPackageName()));
+
+        java.util.Scanner s = new java.util.Scanner(ins).useDelimiter("\\A");
+        String json = s.hasNext() ? s.next() : "";
+        map = new Gson().fromJson(json, new TypeToken<HashMap<String, Integer>>(){}.getType());
+        if (!schemae.contains(untypeable)) {
+            schemae.add(untypeable);
+        }
+        if (!schemae.contains(typeable)) {
+            schemae.add(typeable);
+        }
+        if (!schemae.contains(asciiIsOkay)) {
+            schemae.add(asciiIsOkay);
+        }
     }
 
     @Override
@@ -446,10 +466,10 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                 }
             }
             while (firstPassInput.contains("âa")) {
-                firstPassInput.replace("âa", "a");
+                firstPassInput = firstPassInput.replace("âa", "a");
             }
             while (firstPassInput.contains("aâ")) {
-                firstPassInput.replace("aâ", "â");
+                firstPassInput = firstPassInput.replace("aâ", "â");
             }
             while (firstPassInput.contains("ɔ")) {
                 firstPassInput =
@@ -468,6 +488,96 @@ public final class MyInputMethodService extends InputMethodService implements Ke
             return firstPassInput;
         }
     };
+
+    public static MyBiFunction<String, String, Integer> distance = new MyBiFunction<String, String, Integer>() {
+        @Override
+        public Integer run(String input1, String input2) {
+            if (input1.equals(input2)) {
+                return 0;
+            }
+            if (input1.startsWith(input2)) {
+                return 0;
+            }
+            int length = longestPrefix(input1, input2).length();
+            if (length == 0) {
+                String suffix = longestSuffix(input1, input2);
+                int lengthOfSharedSuffix = suffix.length();
+                if (lengthOfSharedSuffix < input2.length()) {
+                    return input2.length() - lengthOfSharedSuffix;
+                } else {
+                    return input1.indexOf(suffix);
+                }
+            } else {
+                return distance.run(input1.substring(length), input2.substring(length));
+            }
+        }
+    };
+
+    public static MyBiFunction<String, String, Integer> arDistance = new MyBiFunction<String, String, Integer>() {
+        @Override
+        public Integer run(String input1, String input2) {
+            int result = Integer.MAX_VALUE;
+            for (RomanizationSchema r : schemae) {
+                int dist = distance.run(r.parseWord(input1), input2);
+                if (dist == 0) {
+                    return 0;
+                }
+                if (dist < result) {
+                    result = dist;
+                }
+            }
+            return result;
+        }
+    };
+
+    public static <T, U> List<T> filterLowest10(Iterable<T> input, U compare,
+                                                  MyBiFunction<T, U, Integer> filter) {
+        ArrayList<T> result = new ArrayList<>();
+        int maxVal = Integer.MIN_VALUE;
+        int indexOfMax = -1;
+        for (final T key : input) {
+            if (result.size() < 10) {
+                result.add(key);
+                if (filter.run(key, compare) > maxVal) {
+                    maxVal = filter.run(key, compare);
+                    indexOfMax = result.size() - 1;
+                }
+            } else {
+                if (filter.run(key, compare) < maxVal) {
+                    result.set(indexOfMax, key);
+                    int maxLoc = filter.run(result.get(0), compare);
+                    int indexOfMaxLoc = 0;
+                    for (int i = 1; i < result.size(); i++) {
+                        if (filter.run(result.get(i), compare) > maxLoc) {
+                            maxLoc = filter.run(result.get(i), compare);
+                            indexOfMaxLoc = i;
+                        }
+                    }
+                    maxVal = maxLoc;
+                    indexOfMax = indexOfMaxLoc;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static String longestPrefix(String input1, String input2) {
+        for (int i = 1; i < Math.min(input2.length(), input1.length()); i++) {
+            if (!input1.substring(0, i).equals(input2.substring(0, i))) {
+                return input1.substring(0, i - 1);
+            }
+        }
+        return "";
+    }
+
+    public static String longestSuffix(String input1, String input2) {
+        for (int i = 0; i < -1 + Math.min(input2.length(), input1.length()); i++) {
+            if (input1.contains(input2.substring(i))) {
+                return input2.substring(i);
+            }
+        }
+        return "";
+    }
 
     public static RomanizationSchema asciiIsOkay = new RomanizationSchema() {
         @Override
@@ -596,19 +706,19 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                 firstPassInput = firstPassInput.replace("ɫ", "l");
             }
             while (firstPassInput.contains("ae")) {
-                firstPassInput.replace("ae", "a");
+                firstPassInput = firstPassInput.replace("ae", "a");
             }
             while (firstPassInput.contains("ea")) {
-                firstPassInput.replace("ea", "a");
+                firstPassInput = firstPassInput.replace("ea", "a");
             }
             while (firstPassInput.contains("ey")) {
-                firstPassInput.replace("ey", "ay");
+                firstPassInput = firstPassInput.replace("ey", "ay");
             }
             while (firstPassInput.contains("iy")) {
-                firstPassInput.replace("iy", "i");
+                firstPassInput = firstPassInput.replace("iy", "i");
             }
             while (firstPassInput.contains("ow")) {
-                firstPassInput.replace("ow", "u");
+                firstPassInput = firstPassInput.replace("ow", "u");
             }
             while (firstPassInput.contains("ɔ")) {
                 firstPassInput =
@@ -634,10 +744,10 @@ public final class MyInputMethodService extends InputMethodService implements Ke
 
     static String[] mostLikelyWords(String composingText) {
         //TODO: Arabic word guessing logic goes here
-        if (composingText == "") {
+        if (composingText.equals("")) {
             return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
         }
-        String[] result = new String[]{ composingText };
+        String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);
         return wtfArray("ジョジョ", result);
     }
 
