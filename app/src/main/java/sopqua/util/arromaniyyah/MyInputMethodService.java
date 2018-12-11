@@ -769,6 +769,87 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                     }
                     input = input.substring(2);
                     atStart = false;
+                } else if (input.startsWith("bb")) {
+                    sb.append('\u0628\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("tt")) {
+                    sb.append('\u062a\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("tth")) {
+                    sb.append('\u062b\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("jj")) {
+                    sb.append('\u062c\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("hh`")) {
+                    sb.append('\u062d\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("kkh")) {
+                    sb.append('\u062e\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("dd")) {
+                    sb.append('\u062f\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("ddh")) {
+                    sb.append('\u0630\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("rr")) {
+                    sb.append('\u0631\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("zz")) {
+                    sb.append('\u0632\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("ss")) {
+                    sb.append('\u0633\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("ssh")) {
+                    sb.append('\u0634\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("ss`") {
+                    sb.append('\u0635\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("dd`")) {
+                    sb.append('\u0636\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("tt`")) {
+                    sb.append('\u0637\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("ddh`")) {
+                    sb.append('\u0638\u0651');
+                    input = input.substring(4);
+                } else if (input.startsWith("``")) {
+                    sb.append('\u0639\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("ggh")) {
+                    sb.append('\u063A\u0651');
+                    input = input.substring(3);
+                } else if (input.startsWith("ff")) {
+                    sb.append('\u0641\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("qq")) {
+                    sb.append('\u0642\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("kk")) {
+                    sb.append('\u0643\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("ll")) {
+                    sb.append('\u0644\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("mm")) {
+                    sb.append('\u0645\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("nn")) {
+                    sb.append('\u0646\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("hh")) {
+                    sb.append('\u0647\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("ww")) {
+                    sb.append('\u0648\u0651');
+                    input = input.substring(2);
+                } else if (input.startsWith("yy")) {
+                    sb.append('\u064a\u0651');
+                    input = input.substring(2);
                 } else if (input.startsWith("b")) {
                     sb.append('\u0628');
                     input = input.substring(1);
@@ -850,12 +931,24 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                 } else if (input.startsWith("y")) {
                     sb.append('\u064a');
                     input = input.substring(1);
+                } else if (input.startsWith("'")) {
+                    sb.append('\u0621');
+                    input = input.substring(1);
                 } else if (input.startsWith("uu")) {
                     sb.append("\u064f\u0648");
                     input = input.substring(2);
                 } else if (input.startsWith("ii")) {
                     sb.append("\u0650\u064a");
                     input = input.substring(2);
+                } else if (input.startsWith("a")) {
+                    sb.append('\u064e');
+                    input = input.substring(1);
+                } else if (input.startsWith("i")) {
+                    sb.append('\u0650');
+                    input = input.substring(1);
+                } else if (input.startsWith("u")) {
+                    sb.append('\u064f');
+                    input = input.substring(1);
                 } else {
                     input = input.substring(1);
                 }
@@ -872,7 +965,8 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         if (composingText.equals("")) {
             return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
         }
-        String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);
+        //String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);
+        String[] result = new String[]{def.convert(composingText));
         return wtfArray("ジョジョ", result);
     }
 
