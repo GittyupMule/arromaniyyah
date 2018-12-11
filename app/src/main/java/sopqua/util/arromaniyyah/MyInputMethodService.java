@@ -30,8 +30,8 @@ public final class MyInputMethodService extends InputMethodService implements Ke
     public MyInputMethodService() {
         super();
         InputStream ins = getResources().openRawResource(
-                getResources().getIdentifier("frequency_onegrams.json",
-                        "raw", getPackageName()));
+                getResources().getIdentifier(R.raw.frequency_onegrams);
+
 
         java.util.Scanner s = new java.util.Scanner(ins).useDelimiter("\\A");
         String json = s.hasNext() ? s.next() : "";
