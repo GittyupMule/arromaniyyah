@@ -30,14 +30,6 @@ android {
             signingConfig signingConfigs.config
         }
     }
-    afterEvaluate { project ->
-        project.tasks.processReleaseResources {
-            onlyIf {
-                println 'Skipping...'
-                return false
-            }
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
