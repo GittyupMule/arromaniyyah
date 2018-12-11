@@ -11,6 +11,7 @@ public abstract class RomanizationSchema {
 
     public static HashMap<char[], ArabicGrapheme> table = new HashMap<>();
     static {
+        table = new HashMap<>();
         table.put(new char[]{'\u0671'}, ArabicGrapheme.ALIF_WASLAH);
         table.put(new char[]{'\u0670'}, ArabicGrapheme.HANJARIYYAH);
         table.put(new char[]{'\u0652'}, ArabicGrapheme.SUKUN);

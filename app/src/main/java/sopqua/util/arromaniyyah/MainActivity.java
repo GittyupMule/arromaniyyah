@@ -14,12 +14,15 @@ import android.widget.Toast;
 import static sopqua.util.arromaniyyah.MyInputMethodService.mostLikelyWords;
 
 public class MainActivity extends AppCompatActivity {
+    static Context c;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyBroadcastReceiver.ma = this;
         MyBroadcastReceiver.v = getLayoutInflater().inflate(R.layout.candidates_view, null);
         setContentView(R.layout.activity_main);
+        c = this.getApplicationContext();
     }
 
     @Override
