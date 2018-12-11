@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import static sopqua.util.arromaniyyah.MyBroadcastReceiver.v;
 
+
 public final class MyInputMethodService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
     private static HashMap<String, Integer> map;
     private static ArrayList<RomanizationSchema> schemae = new ArrayList<>();
