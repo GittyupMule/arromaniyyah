@@ -743,7 +743,6 @@ public final class MyInputMethodService extends InputMethodService implements Ke
     }
 
     static String[] mostLikelyWords(String composingText) {
-        //TODO: Arabic word guessing logic goes here
         if (composingText.equals("")) {
             return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
         }
