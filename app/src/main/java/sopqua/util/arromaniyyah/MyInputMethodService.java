@@ -15,8 +15,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +31,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
 
     public MyInputMethodService() {
         super();
-        if (schemae == null) {
+        /*if (schemae == null) {
             schemae = new ArrayList<>();
         }
         arDistance = new MyBiFunction<String, String, Integer>() {
@@ -584,7 +582,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         }
         if (!schemae.contains(asciiIsOkay)) {
             schemae.add(asciiIsOkay);
-        }
+        }*/
     }
 
     @Override
@@ -968,7 +966,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
             return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
         }
         //String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);
-        String[] result = new String[]{composingText};
+        String[] result = new String[]{def.convert(composingText)};
         return wtfArray("ジョジョ", result);
     }
 
@@ -1008,6 +1006,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
 
     @Override
     public View onCreateInputView() {
+        Log.wtf("ジョジョ", "onCreateInputView()");
         //map = new Gson().fromJson(OnegramJSON.onegrams, new TypeToken<HashMap<String, Integer>>() {}.getType());
         keyboardView = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_view,
                 null);
