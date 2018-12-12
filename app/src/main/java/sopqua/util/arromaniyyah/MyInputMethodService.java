@@ -15,8 +15,6 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,7 +31,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
 
     public MyInputMethodService() {
         super();
-        if (schemae == null) {
+        /*if (schemae == null) {
             schemae = new ArrayList<>();
         }
         arDistance = new MyBiFunction<String, String, Integer>() {
@@ -584,7 +582,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         }
         if (!schemae.contains(asciiIsOkay)) {
             schemae.add(asciiIsOkay);
-        }
+        }*/
     }
 
     @Override
@@ -747,211 +745,212 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         public String convert(String input) {
             StringBuilder sb = new StringBuilder();
             boolean atStart = true;
-            while (input.length() > 0) {
-                if (input.startsWith("'a")) {
+            StringBuilder in = new StringBuilder(input);
+            while (in.length() > 0) {
+                if (in.toString().startsWith("'aa")) {
                     sb.append("\u0622");
-                    input = input.substring(3);
-                } else if (input.startsWith("aa") && atStart) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("aa") && atStart) {
                     sb.append("\u0627");
-                    input = input.substring(2);
+                    in.delete(0, 2);
                     atStart = false;
-                } else if (input.startsWith("aa")) {
+                } else if (in.toString().startsWith("aa")) {
                     sb.append("\u0627");
-                    input = input.substring(2);
+                    in.delete(0, 2);
                 } else if (atStart) {
-                    if (input.startsWith("'a")) {
+                    if (in.toString().startsWith("'a")) {
                         sb.append("\u0625\u064e");
-                    } else if (input.startsWith("'i")) {
+                    } else if (in.toString().startsWith("'i")) {
                         sb.append("\u0625\u0650");
-                    } else if (input.startsWith("'u")) {
+                    } else if (in.toString().startsWith("'u")) {
                         sb.append("\u0625\u064f");
-                    } else if (input.startsWith("al")) {
+                    } else if (in.toString().startsWith("al")) {
                         sb.append("\u0627\u064e\u0644");
                     }
-                    input = input.substring(2);
+                    in.delete(0, 2);
                     atStart = false;
-                } else if (input.startsWith("bb")) {
+                } else if (in.toString().startsWith("bb")) {
                     sb.append("\u0628\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("tt")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("tt")) {
                     sb.append("\u062a\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("tth")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("tth")) {
                     sb.append("\u062b\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("jj")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("jj")) {
                     sb.append("\u062c\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("hh`")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("hh`")) {
                     sb.append("\u062d\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("kkh")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("kkh")) {
                     sb.append("\u062e\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("dd")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("dd")) {
                     sb.append("\u062f\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("ddh")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("ddh")) {
                     sb.append("\u0630\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("rr")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("rr")) {
                     sb.append("\u0631\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("zz")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("zz")) {
                     sb.append("\u0632\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("ss")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("ss")) {
                     sb.append("\u0633\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("ssh")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("ssh")) {
                     sb.append("\u0634\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("ss`")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("ss`")) {
                     sb.append("\u0635\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("dd`")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("dd`")) {
                     sb.append("\u0636\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("tt`")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("tt`")) {
                     sb.append("\u0637\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("ddh`")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("ddh`")) {
                     sb.append("\u0638\u0651");
-                    input = input.substring(4);
-                } else if (input.startsWith("``")) {
+                    in.delete(0, 4);
+                } else if (in.toString().startsWith("``")) {
                     sb.append("\u0639\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("ggh")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("ggh")) {
                     sb.append("\u063A\u0651");
-                    input = input.substring(3);
-                } else if (input.startsWith("ff")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("ff")) {
                     sb.append("\u0641\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("qq")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("qq")) {
                     sb.append("\u0642\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("kk")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("kk")) {
                     sb.append("\u0643\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("ll")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("ll")) {
                     sb.append("\u0644\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("mm")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("mm")) {
                     sb.append("\u0645\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("nn")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("nn")) {
                     sb.append("\u0646\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("hh")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("hh")) {
                     sb.append("\u0647\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("ww")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("ww")) {
                     sb.append("\u0648\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("yy")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("yy")) {
                     sb.append("\u064a\u0651");
-                    input = input.substring(2);
-                } else if (input.startsWith("b")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("b")) {
                     sb.append("\u0628");
-                    input = input.substring(1);
-                } else if (input.startsWith("t")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("t")) {
                     sb.append("\u062a");
-                    input = input.substring(1);
-                } else if (input.startsWith("th")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("th")) {
                     sb.append("\u062b");
-                    input = input.substring(2);
-                } else if (input.startsWith("j")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("j")) {
                     sb.append("\u062c");
-                    input = input.substring(1);
-                } else if (input.startsWith("h`")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("h`")) {
                     sb.append("\u062d");
-                    input = input.substring(2);
-                } else if (input.startsWith("kh")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("kh")) {
                     sb.append("\u062e");
-                    input = input.substring(2);
-                } else if (input.startsWith("d")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("d")) {
                     sb.append("\u062f");
-                    input = input.substring(1);
-                } else if (input.startsWith("dh")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("dh")) {
                     sb.append("\u0630");
-                    input = input.substring(2);
-                } else if (input.startsWith("r")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("r")) {
                     sb.append("\u0631");
-                    input = input.substring(1);
-                } else if (input.startsWith("z")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("z")) {
                     sb.append("\u0632");
-                    input = input.substring(1);
-                } else if (input.startsWith("s")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("s")) {
                     sb.append("\u0633");
-                    input = input.substring(1);
-                } else if (input.startsWith("sh")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("sh")) {
                     sb.append("\u0634");
-                    input = input.substring(2);
-                } else if (input.startsWith("s`")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("s`")) {
                     sb.append("\u0635");
-                    input = input.substring(2);
-                } else if (input.startsWith("d`")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("d`")) {
                     sb.append("\u0636");
-                    input = input.substring(2);
-                } else if (input.startsWith("t`")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("t`")) {
                     sb.append("\u0637");
-                    input = input.substring(2);
-                } else if (input.startsWith("dh`")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("dh`")) {
                     sb.append("\u0638");
-                    input = input.substring(3);
-                } else if (input.startsWith("`")) {
+                    in.delete(0, 3);
+                } else if (in.toString().startsWith("`")) {
                     sb.append("\u0639");
-                    input = input.substring(1);
-                } else if (input.startsWith("gh")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("gh")) {
                     sb.append("\u063A");
-                    input = input.substring(2);
-                } else if (input.startsWith("f")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("f")) {
                     sb.append("\u0641");
-                    input = input.substring(1);
-                } else if (input.startsWith("q")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("q")) {
                     sb.append("\u0642");
-                    input = input.substring(1);
-                } else if (input.startsWith("k")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("k")) {
                     sb.append("\u0643");
-                    input = input.substring(1);
-                } else if (input.startsWith("l")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("l")) {
                     sb.append("\u0644");
-                    input = input.substring(1);
-                } else if (input.startsWith("m")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("m")) {
                     sb.append("\u0645");
-                    input = input.substring(1);
-                } else if (input.startsWith("n")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("n")) {
                     sb.append("\u0646");
-                    input = input.substring(1);
-                } else if (input.startsWith("h")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("h")) {
                     sb.append("\u0647");
-                    input = input.substring(1);
-                } else if (input.startsWith("w")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("w")) {
                     sb.append("\u0648");
-                    input = input.substring(1);
-                } else if (input.startsWith("y")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("y")) {
                     sb.append("\u064a");
-                    input = input.substring(1);
-                } else if (input.startsWith("'")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("'")) {
                     sb.append("\u0621");
-                    input = input.substring(1);
-                } else if (input.startsWith("uu")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("uu")) {
                     sb.append("\u064f\u0648");
-                    input = input.substring(2);
-                } else if (input.startsWith("ii")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("ii")) {
                     sb.append("\u0650\u064a");
-                    input = input.substring(2);
-                } else if (input.startsWith("a")) {
+                    in.delete(0, 2);
+                } else if (in.toString().startsWith("a")) {
                     sb.append("\u064e");
-                    input = input.substring(1);
-                } else if (input.startsWith("i")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("i")) {
                     sb.append("\u0650");
-                    input = input.substring(1);
-                } else if (input.startsWith("u")) {
+                    in.delete(0, 1);
+                } else if (in.toString().startsWith("u")) {
                     sb.append("\u064f");
-                    input = input.substring(1);
+                    in.delete(0, 1);
                 } else {
-                    input = input.substring(1);
+                    in.delete(0, 1);
                 }
             }
             return sb.toString();
@@ -1007,8 +1006,10 @@ public final class MyInputMethodService extends InputMethodService implements Ke
 
     @Override
     public View onCreateInputView() {
+        Log.wtf("ジョジョ", "onCreateInputView()");
         //map = new Gson().fromJson(OnegramJSON.onegrams, new TypeToken<HashMap<String, Integer>>() {}.getType());
-        keyboardView = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_view, null);
+        keyboardView = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_view,
+                null);
         keyboard = new Keyboard(this, R.xml.keys_layout_qwerty);
         keyboardView.setKeyboard(keyboard);
         keyboardView.setOnKeyboardActionListener(this);
