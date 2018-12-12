@@ -29,6 +29,7 @@ import static sopqua.util.arromaniyyah.MyBroadcastReceiver.v;
 public final class MyInputMethodService extends InputMethodService implements KeyboardView.OnKeyboardActionListener {
     private static HashMap<String, Integer> map;
     private static ArrayList<RomanizationSchema> schemae;
+    private String composingText = "";
 
     public MyInputMethodService() {
         super();
@@ -747,15 +748,15 @@ public final class MyInputMethodService extends InputMethodService implements Ke
             StringBuilder sb = new StringBuilder();
             boolean atStart = true;
             while (input.length() > 0) {
-                if (input.startsWith("'aa")) {
-                    sb.append('\u0622');
+                if (input.startsWith("'a")) {
+                    sb.append("\u0622");
                     input = input.substring(3);
                 } else if (input.startsWith("aa") && atStart) {
-                    sb.append('\u0627');
+                    sb.append("\u0627");
                     input = input.substring(2);
                     atStart = false;
                 } else if (input.startsWith("aa")) {
-                    sb.append('\u0627');
+                    sb.append("\u0627");
                     input = input.substring(2);
                 } else if (atStart) {
                     if (input.startsWith("'a")) {
@@ -769,86 +770,170 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                     }
                     input = input.substring(2);
                     atStart = false;
+                } else if (input.startsWith("bb")) {
+                    sb.append("\u0628\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("tt")) {
+                    sb.append("\u062a\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("tth")) {
+                    sb.append("\u062b\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("jj")) {
+                    sb.append("\u062c\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("hh`")) {
+                    sb.append("\u062d\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("kkh")) {
+                    sb.append("\u062e\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("dd")) {
+                    sb.append("\u062f\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("ddh")) {
+                    sb.append("\u0630\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("rr")) {
+                    sb.append("\u0631\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("zz")) {
+                    sb.append("\u0632\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("ss")) {
+                    sb.append("\u0633\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("ssh")) {
+                    sb.append("\u0634\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("ss`")) {
+                    sb.append("\u0635\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("dd`")) {
+                    sb.append("\u0636\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("tt`")) {
+                    sb.append("\u0637\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("ddh`")) {
+                    sb.append("\u0638\u0651");
+                    input = input.substring(4);
+                } else if (input.startsWith("``")) {
+                    sb.append("\u0639\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("ggh")) {
+                    sb.append("\u063A\u0651");
+                    input = input.substring(3);
+                } else if (input.startsWith("ff")) {
+                    sb.append("\u0641\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("qq")) {
+                    sb.append("\u0642\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("kk")) {
+                    sb.append("\u0643\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("ll")) {
+                    sb.append("\u0644\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("mm")) {
+                    sb.append("\u0645\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("nn")) {
+                    sb.append("\u0646\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("hh")) {
+                    sb.append("\u0647\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("ww")) {
+                    sb.append("\u0648\u0651");
+                    input = input.substring(2);
+                } else if (input.startsWith("yy")) {
+                    sb.append("\u064a\u0651");
+                    input = input.substring(2);
                 } else if (input.startsWith("b")) {
-                    sb.append('\u0628');
+                    sb.append("\u0628");
                     input = input.substring(1);
                 } else if (input.startsWith("t")) {
-                    sb.append('\u062a');
+                    sb.append("\u062a");
                     input = input.substring(1);
                 } else if (input.startsWith("th")) {
-                    sb.append('\u062b');
+                    sb.append("\u062b");
                     input = input.substring(2);
                 } else if (input.startsWith("j")) {
-                    sb.append('\u062c');
+                    sb.append("\u062c");
                     input = input.substring(1);
                 } else if (input.startsWith("h`")) {
-                    sb.append('\u062d');
+                    sb.append("\u062d");
                     input = input.substring(2);
                 } else if (input.startsWith("kh")) {
-                    sb.append('\u062e');
+                    sb.append("\u062e");
                     input = input.substring(2);
                 } else if (input.startsWith("d")) {
-                    sb.append('\u062f');
+                    sb.append("\u062f");
                     input = input.substring(1);
                 } else if (input.startsWith("dh")) {
-                    sb.append('\u0630');
+                    sb.append("\u0630");
                     input = input.substring(2);
                 } else if (input.startsWith("r")) {
-                    sb.append('\u0631');
+                    sb.append("\u0631");
                     input = input.substring(1);
                 } else if (input.startsWith("z")) {
-                    sb.append('\u0632');
+                    sb.append("\u0632");
                     input = input.substring(1);
                 } else if (input.startsWith("s")) {
-                    sb.append('\u0633');
+                    sb.append("\u0633");
                     input = input.substring(1);
                 } else if (input.startsWith("sh")) {
-                    sb.append('\u0634');
+                    sb.append("\u0634");
                     input = input.substring(2);
                 } else if (input.startsWith("s`")) {
-                    sb.append('\u0635');
+                    sb.append("\u0635");
                     input = input.substring(2);
                 } else if (input.startsWith("d`")) {
-                    sb.append('\u0636');
+                    sb.append("\u0636");
                     input = input.substring(2);
                 } else if (input.startsWith("t`")) {
-                    sb.append('\u0637');
+                    sb.append("\u0637");
                     input = input.substring(2);
                 } else if (input.startsWith("dh`")) {
-                    sb.append('\u0638');
+                    sb.append("\u0638");
                     input = input.substring(3);
                 } else if (input.startsWith("`")) {
-                    sb.append('\u0639');
+                    sb.append("\u0639");
                     input = input.substring(1);
                 } else if (input.startsWith("gh")) {
-                    sb.append('\u063A');
+                    sb.append("\u063A");
                     input = input.substring(2);
                 } else if (input.startsWith("f")) {
-                    sb.append('\u0641');
+                    sb.append("\u0641");
                     input = input.substring(1);
                 } else if (input.startsWith("q")) {
-                    sb.append('\u0642');
+                    sb.append("\u0642");
                     input = input.substring(1);
                 } else if (input.startsWith("k")) {
-                    sb.append('\u0643');
+                    sb.append("\u0643");
                     input = input.substring(1);
                 } else if (input.startsWith("l")) {
-                    sb.append('\u0644');
+                    sb.append("\u0644");
                     input = input.substring(1);
                 } else if (input.startsWith("m")) {
-                    sb.append('\u0645');
+                    sb.append("\u0645");
                     input = input.substring(1);
                 } else if (input.startsWith("n")) {
-                    sb.append('\u0646');
+                    sb.append("\u0646");
                     input = input.substring(1);
                 } else if (input.startsWith("h")) {
-                    sb.append('\u0647');
+                    sb.append("\u0647");
                     input = input.substring(1);
                 } else if (input.startsWith("w")) {
-                    sb.append('\u0648');
+                    sb.append("\u0648");
                     input = input.substring(1);
                 } else if (input.startsWith("y")) {
-                    sb.append('\u064a');
+                    sb.append("\u064a");
+                    input = input.substring(1);
+                } else if (input.startsWith("'")) {
+                    sb.append("\u0621");
                     input = input.substring(1);
                 } else if (input.startsWith("uu")) {
                     sb.append("\u064f\u0648");
@@ -856,6 +941,15 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                 } else if (input.startsWith("ii")) {
                     sb.append("\u0650\u064a");
                     input = input.substring(2);
+                } else if (input.startsWith("a")) {
+                    sb.append("\u064e");
+                    input = input.substring(1);
+                } else if (input.startsWith("i")) {
+                    sb.append("\u0650");
+                    input = input.substring(1);
+                } else if (input.startsWith("u")) {
+                    sb.append("\u064f");
+                    input = input.substring(1);
                 } else {
                     input = input.substring(1);
                 }
@@ -872,7 +966,8 @@ public final class MyInputMethodService extends InputMethodService implements Ke
         if (composingText.equals("")) {
             return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
         }
-        String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);
+        //String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);
+        String[] result = new String[]{def.convert(composingText)};
         return wtfArray("ジョジョ", result);
     }
 
@@ -909,11 +1004,10 @@ public final class MyInputMethodService extends InputMethodService implements Ke
     private KeyboardView keyboardView;
     private Keyboard keyboard;
     private View candidatesView;
-    private String composingText;
 
     @Override
     public View onCreateInputView() {
-        map = new Gson().fromJson(OnegramJSON.onegrams, new TypeToken<HashMap<String, Integer>>() {}.getType());
+        //map = new Gson().fromJson(OnegramJSON.onegrams, new TypeToken<HashMap<String, Integer>>() {}.getType());
         keyboardView = (KeyboardView) getLayoutInflater().inflate(R.layout.keyboard_view, null);
         keyboard = new Keyboard(this, R.xml.keys_layout_qwerty);
         keyboardView.setKeyboard(keyboard);

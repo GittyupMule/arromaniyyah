@@ -9,7 +9,7 @@ import java.util.Set;
 
 public abstract class RomanizationSchema {
 
-    public static HashMap<char[], ArabicGrapheme> table;
+    public static HashMap<char[], ArabicGrapheme> table = new HashMap<>();
     static {
         table = new HashMap<>();
         table.put(new char[]{'\u0671'}, ArabicGrapheme.ALIF_WASLAH);
