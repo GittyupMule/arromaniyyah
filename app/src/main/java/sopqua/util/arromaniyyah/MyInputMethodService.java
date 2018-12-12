@@ -641,7 +641,8 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                 inputConnection.commitText(".", 1);
                 break;
             case 32:
-                inputConnection.commitText(mostLikelyWord(composingText), 1);
+                if (composingText.length() > 0)
+                    inputConnection.commitText(mostLikelyWord(composingText), 1);
                 composingText = "";
                 updateSuggestions();
                 inputConnection.commitText(" ", 1);
@@ -758,17 +759,38 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                     sb.append("\u0627");
                     in.delete(0, 2);
                 } else if (atStart) {
-                    if (in.toString().startsWith("'a")) {
-                        sb.append("\u0625\u064e");
+                    if (in.toString().startsWith("a")) {
+                        sb.append("\u0627\u064e");
+                        in.delete(0, 1);
+                        atStart = false;
+                    } else if (in.toString().startsWith("i")) {
+                        sb.append("\u0627\u0650");
+                        in.delete(0, 1);
+                        atStart = false;
+                    } else if (in.toString().startsWith("u")) {
+                        sb.append("\u0627\u064f");
+                        in.delete(0, 1);
+                        atStart = false;
+                    } else if (in.toString().startsWith("'a")) {
+                        sb.append("\u0623\u064e");
+                        in.delete(0, 2);
+                        atStart = false;
                     } else if (in.toString().startsWith("'i")) {
                         sb.append("\u0625\u0650");
+                        in.delete(0, 2);
+                        atStart = false;
                     } else if (in.toString().startsWith("'u")) {
-                        sb.append("\u0625\u064f");
+                        sb.append("\u0623\u064f");
+                        in.delete(0, 2);
+                        atStart = false;
                     } else if (in.toString().startsWith("al")) {
                         sb.append("\u0627\u064e\u0644");
+                        in.delete(0, 2);
+                        atStart = false;
+                    } else {
+                        atStart = false;
                     }
-                    in.delete(0, 2);
-                    atStart = false;
+
                 } else if (in.toString().startsWith("bb")) {
                     sb.append("\u0628\u0651");
                     in.delete(0, 2);
@@ -963,7 +985,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
 
     static String[] mostLikelyWords(String composingText) {
         if (composingText.equals("")) {
-            return wtfArray("ジョジョ", new String[]{"TEST!!!!"});
+            return wtfArray("ジョジョ", new String[]{"فِى", "إِنّ", "مِن"});
         }
         //String[] result = filterLowest10(map.keySet(), composingText, arDistance).toArray(new String[10]);
         String[] result = new String[]{def.convert(composingText)};
@@ -1047,7 +1069,7 @@ public final class MyInputMethodService extends InputMethodService implements Ke
                                 getCurrentInputConnection().commitText(
                                         mostLikelyWords(
                                                 composingText
-                                        )[j],
+                                        )[j] + " ",
                                         1
                                 );
                                 composingText = "";
